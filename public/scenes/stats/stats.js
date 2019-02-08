@@ -1,4 +1,5 @@
 import Scene from "../../scene.js";
+import CSVify from "../../utils/csvify.js";
 class Stats extends Scene {
     constructor(app, infoCollector) {
         super(app);
@@ -16,7 +17,7 @@ class Stats extends Scene {
     }
     createDataTextarea() {
         const textarea = document.createElement("textarea");
-        textarea.value = JSON.stringify(this.infoCollector.logs, undefined, 4);
+        textarea.value = CSVify(this.infoCollector.logs);
         textarea.readOnly = true;
         this.elm.appendChild(textarea);
     }
