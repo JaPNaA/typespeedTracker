@@ -1,24 +1,23 @@
-import Scene from "../scene.js";
+import Scene from "../../scene.js";
+import TextController from "./textController.js";
 
 class TypingScene extends Scene {
     protected elm: HTMLDivElement;
 
-    private textToType: HTMLDivElement;
+    private text: TextController;
     private input: HTMLInputElement;
-
 
     constructor() {
         super();
 
         this.elm = this.createElm();
-        this.textToType = this.createTextToTypeElement();
+        this.text = this.createText();
         this.input = this.createInput();
 
         this.setup();
     }
 
     public setup(): void {
-        this.textToType.innerText = "Loading...";
         this.getText();
     }
 
@@ -34,11 +33,10 @@ class TypingScene extends Scene {
         return elm;
     }
 
-    private createTextToTypeElement(): HTMLDivElement {
-        const textToType = document.createElement("div");
-        textToType.classList.add("textToType");
-        this.elm.appendChild(textToType);
-        return textToType;
+    private createText(): TextController {
+        const controller = new TextController();
+        controller.appendTo(this.elm);
+        return controller;
     }
 
     private createInput(): HTMLInputElement {
@@ -50,7 +48,7 @@ class TypingScene extends Scene {
 
     private async getText() {
         const text = await fetch("text.txt").then(e => e.text());
-        this.textToType.innerText = text;
+        this.text.setText(text);
     }
 }
 

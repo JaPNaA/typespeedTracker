@@ -1,4 +1,4 @@
-import TypingScene from "./scenes/typing.js";
+import TypingScene from "./scenes/typing/typing.js";
 class App {
     constructor() {
         this.currScene = this.createTypingScene();

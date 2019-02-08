@@ -1,5 +1,5 @@
 import Scene from "./scene.js";
-import TypingScene from "./scenes/typing.js";
+import TypingScene from "./scenes/typing/typing.js";
 
 class App {
     private currScene: Scene;
