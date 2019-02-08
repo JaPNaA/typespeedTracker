@@ -47,8 +47,8 @@ class TypingScene extends Scene {
         return input;
     }
 
-    private onInput() {
-        this.text.typeChar(this.input.nextValue());
+    private onInput(value: string) {
+        this.text.typeChar(value);
     }
 
     private async getText() {

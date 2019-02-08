@@ -41,8 +41,8 @@ class TypingScene extends Scene {
         input.appendTo(this.elm);
         return input;
     }
-    onInput() {
-        this.text.typeChar(this.input.nextValue());
+    onInput(value) {
+        this.text.typeChar(value);
     }
     getText() {
         return __awaiter(this, void 0, void 0, function* () {

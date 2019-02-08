@@ -1,3 +1,4 @@
+import sanitizeSpecialChars from "../../utils/sanitizeSpecialChars";
 class InputController {
     constructor() {
         this.inputHandlers = [];
@@ -6,11 +7,6 @@ class InputController {
     }
     onInput(cb) {
         this.inputHandlers.push(cb);
-    }
-    nextValue() {
-        const value = this.input.value;
-        this.input.value = "";
-        return value;
     }
     appendTo(elm) {
         elm.appendChild(this.elm);
@@ -28,9 +24,15 @@ class InputController {
         return input;
     }
     onInputHandler() {
+        const value = this.nextValue();
         for (let cb of this.inputHandlers) {
-            cb();
+            cb(value);
         }
+    }
+    nextValue() {
+        const value = sanitizeSpecialChars(this.input.value);
+        this.input.value = "";
+        return value;
     }
 }
 export default InputController;

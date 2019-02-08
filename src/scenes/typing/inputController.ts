@@ -1,22 +1,20 @@
+import sanitizeSpecialChars from "../../utils/sanitizeSpecialChars";
+
+type InputControllerCallback = (value: string) => void;
+
 class InputController {
     private elm: HTMLDivElement;
     private input: HTMLInputElement;
 
-    private inputHandlers: Function[] = [];
+    private inputHandlers: InputControllerCallback[] = [];
 
     constructor() {
         this.elm = this.createElm();
         this.input = this.createInput();
     }
 
-    public onInput(cb: Function) {
+    public onInput(cb: InputControllerCallback) {
         this.inputHandlers.push(cb);
-    }
-
-    public nextValue(): string {
-        const value = this.input.value;
-        this.input.value = "";
-        return value;
     }
 
     public appendTo(elm: HTMLElement) {
@@ -38,9 +36,17 @@ class InputController {
     }
 
     private onInputHandler(): void {
+        const value = this.nextValue();
+
         for (let cb of this.inputHandlers) {
-            cb();
+            cb(value);
         }
+    }
+
+    private nextValue(): string {
+        const value = sanitizeSpecialChars(this.input.value);
+        this.input.value = "";
+        return value;
     }
 }
 
