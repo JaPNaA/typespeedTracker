@@ -52,7 +52,7 @@ class TypingScene extends Scene {
     }
     getText() {
         return __awaiter(this, void 0, void 0, function* () {
-            const text = (yield fetch("text.txt").then(e => e.text())).slice(0, 10); // TEMP TODO
+            const text = yield fetch("text.txt").then(e => e.text());
             this.text.setText(text);
         });
     }

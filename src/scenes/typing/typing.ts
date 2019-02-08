@@ -60,7 +60,7 @@ class TypingScene extends Scene {
     }
 
     private async getText() {
-        const text = (await fetch("text.txt").then(e => e.text())).slice(0, 10); // TEMP TODO
+        const text = await fetch("text.txt").then(e => e.text());
         this.text.setText(text);
     }
 }
