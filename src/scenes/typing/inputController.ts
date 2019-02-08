@@ -1,4 +1,4 @@
-import sanitizeSpecialChars from "../../utils/sanitizeSpecialChars";
+import sanitizeSpecialChars from "../../utils/sanitizeSpecialChars.js";
 
 type InputControllerCallback = (value: string) => void;
 

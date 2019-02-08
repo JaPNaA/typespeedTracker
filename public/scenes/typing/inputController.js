@@ -1,4 +1,4 @@
-import sanitizeSpecialChars from "../../utils/sanitizeSpecialChars";
+import sanitizeSpecialChars from "../../utils/sanitizeSpecialChars.js";
 class InputController {
     constructor() {
         this.inputHandlers = [];
