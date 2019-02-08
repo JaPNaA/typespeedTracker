@@ -3,8 +3,8 @@ class InfoCollector {
     constructor() {
         this.logs = [];
     }
-    logKey(keyStr, correctKey, isIncorrect, isBackspace) {
-        this.logs.push(new KeyLog(keyStr, correctKey, isIncorrect, isBackspace));
+    logKey(keyStr, correctKey, index, isIncorrect, isBackspace) {
+        this.logs.push(new KeyLog(keyStr, correctKey, index, isIncorrect, isBackspace));
     }
 }
 export default InfoCollector;

@@ -24,6 +24,7 @@ function sanitizeText(text: CSVifyableValue): string {
     } else if (typeof text === "boolean") {
         return text ? "TRUE" : "FALSE";
     } else if (typeof text === "number") {
+        // to 3 decimal points
         return text.toString().replace(/(.+)\.(\d{3})\d+/, "$1.$2");
     } else {
         return "NULL";

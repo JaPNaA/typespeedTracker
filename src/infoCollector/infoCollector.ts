@@ -6,8 +6,8 @@ class InfoCollector {
 
     constructor() { }
 
-    public logKey(keyStr: string, correctKey: string, isIncorrect: boolean, isBackspace: boolean): void {
-        this.logs.push(new KeyLog(keyStr, correctKey, isIncorrect, isBackspace));
+    public logKey(keyStr: string, correctKey: string, index: number, isIncorrect: boolean, isBackspace: boolean): void {
+        this.logs.push(new KeyLog(keyStr, correctKey, index, isIncorrect, isBackspace));
     }
 }
 
