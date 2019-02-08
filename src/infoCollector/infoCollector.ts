@@ -2,7 +2,7 @@ import Log from "./log/log.js";
 import KeyLog from "./log/keyLog.js";
 
 class InfoCollector {
-    private logs: Log[] = [];
+    public logs: Log[] = [];
 
     constructor() { }
 

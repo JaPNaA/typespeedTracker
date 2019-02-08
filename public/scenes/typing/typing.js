@@ -10,22 +10,20 @@ import Scene from "../../scene.js";
 import TextController from "./textController.js";
 import InputController from "./inputController.js";
 import InfoCollector from "../../infoCollector/infoCollector.js";
+import Stats from "../stats/stats.js";
 class TypingScene extends Scene {
-    constructor() {
-        super();
+    constructor(app) {
+        super(app);
         this.elm = this.createElm();
         this.infoCollecter = new InfoCollector();
         this.text = this.createText();
         this.input = this.createInput();
-        this.setup();
     }
     setup() {
         this.getText();
     }
     destory() {
-        if (this.elm.parentElement) {
-            this.elm.parentElement.removeChild(this.elm);
-        }
+        this.removeSelf();
         this.text.destory();
     }
     createElm() {
@@ -36,7 +34,7 @@ class TypingScene extends Scene {
     createText() {
         const controller = new TextController(this.infoCollecter);
         controller.appendTo(this.elm);
-        controller.onDone(function () { console.log("Done!!"); });
+        controller.onDone(this.onDone.bind(this));
         return controller;
     }
     createInput() {
@@ -47,6 +45,10 @@ class TypingScene extends Scene {
     }
     onInput(value) {
         this.text.typeChar(value);
+    }
+    onDone() {
+        console.log("Done!!");
+        this.app.switchScene(new Stats(this.app, this.infoCollecter));
     }
     getText() {
         return __awaiter(this, void 0, void 0, function* () {

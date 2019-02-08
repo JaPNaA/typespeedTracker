@@ -2,17 +2,22 @@ import Scene from "./scene.js";
 import TypingScene from "./scenes/typing/typing.js";
 
 class App {
-    private currScene: Scene;
+    private currScene?: Scene;
 
     constructor() {
-        this.currScene = this.createTypingScene();
+        this.typingScene();
     }
 
-    private createTypingScene(): TypingScene {
-        const scene = new TypingScene();
+    public switchScene(scene: Scene): void {
         this.destoryCurrScene();
+        this.currScene = scene;
+        scene.setup();
         scene.appendTo(document.body);
-        return scene;
+    }
+
+    private typingScene(): void {
+        const scene = new TypingScene(this);
+        this.switchScene(scene);
     }
 
     private destoryCurrScene() {
@@ -23,3 +28,5 @@ class App {
 }
 
 console.log(new App());
+
+export default App;

@@ -1,13 +1,17 @@
 import TypingScene from "./scenes/typing/typing.js";
 class App {
     constructor() {
-        this.currScene = this.createTypingScene();
+        this.typingScene();
     }
-    createTypingScene() {
-        const scene = new TypingScene();
+    switchScene(scene) {
         this.destoryCurrScene();
+        this.currScene = scene;
+        scene.setup();
         scene.appendTo(document.body);
-        return scene;
+    }
+    typingScene() {
+        const scene = new TypingScene(this);
+        this.switchScene(scene);
     }
     destoryCurrScene() {
         if (this.currScene) {
@@ -16,3 +20,4 @@ class App {
     }
 }
 console.log(new App());
+export default App;
