@@ -11,6 +11,7 @@ function tableToString(rows) {
 }
 function sanitizeText(text) {
     return text.toString()
+        .replace(/\\/, "\\\\")
         .replace(/,/g, "\\,")
         .replace(/\n/g, "\\n")
         .replace(/\x08/g, "\\b");

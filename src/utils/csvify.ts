@@ -16,6 +16,7 @@ function tableToString(rows: CSVifyableValue[][]): string {
 
 function sanitizeText(text: CSVifyableValue): string {
     return text.toString()
+        .replace(/\\/, "\\\\")
         .replace(/,/g, "\\,")
         .replace(/\n/g, "\\n")
         .replace(/\x08/g, "\\b");
