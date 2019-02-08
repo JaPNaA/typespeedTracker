@@ -37,8 +37,12 @@ class TypingScene extends Scene {
     createInput() {
         const input = document.createElement("input");
         input.classList.add("input");
+        input.addEventListener("input", this.onInput.bind(this));
         this.elm.appendChild(input);
         return input;
+    }
+    onInput(e) {
+        this.text.typeChar(this.input.value);
     }
     getText() {
         return __awaiter(this, void 0, void 0, function* () {
