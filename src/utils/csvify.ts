@@ -36,6 +36,7 @@ function sanitizeText(text: CSVifyableValue): string {
 }
 
 export default function CSVify(objs: { [x: string]: CSVifyableValue }[]): string {
+    if (!objs[0]) { return ""; }
     const rows: CSVifyableValue[][] = [];
     const headings = Object.keys(objs[0]);
 

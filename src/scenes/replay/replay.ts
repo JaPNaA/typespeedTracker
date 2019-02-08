@@ -12,11 +12,11 @@ class ReplayScene extends TextScene {
     }
 
     public setup() {
-        //
+        super.setup();
     }
 
     public destory() {
-        //
+        super.destory();
     }
 }
 

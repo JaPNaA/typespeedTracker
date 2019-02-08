@@ -6,6 +6,8 @@ class Stats extends Scene {
         super(app);
         this.infoCollector = infoCollector;
         this.elm = this.createElm();
+        this.createH1();
+        this.createDataTextarea();
         this.replayButton = this.createReplayButton();
     }
     createElm() {
@@ -16,14 +18,12 @@ class Stats extends Scene {
     createReplayButton() {
         const button = document.createElement("button");
         button.classList.add("replay");
+        button.innerText = "View Replay";
         button.addEventListener("click", () => this.app.switchScene(new ReplayScene(this.app, this.infoCollector)));
         this.elm.appendChild(button);
         return button;
     }
-    setup() {
-        this.createH1();
-        this.createDataTextarea();
-    }
+    setup() { }
     createDataTextarea() {
         const textarea = document.createElement("textarea");
         textarea.value = CSVify(this.infoCollector.logs);

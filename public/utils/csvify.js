@@ -31,6 +31,9 @@ function sanitizeText(text) {
     }
 }
 export default function CSVify(objs) {
+    if (!objs[0]) {
+        return "";
+    }
     const rows = [];
     const headings = Object.keys(objs[0]);
     rows.push(headings);

@@ -5,10 +5,10 @@ class ReplayScene extends TextScene {
         this.elm = document.createElement("div");
     }
     setup() {
-        //
+        super.setup();
     }
     destory() {
-        //
+        super.destory();
     }
 }
 export default ReplayScene;
