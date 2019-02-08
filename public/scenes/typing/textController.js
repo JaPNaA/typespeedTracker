@@ -17,11 +17,26 @@ class TextController {
         for (let line of lines) {
             this.textElm.appendChild(this.createLineElm(line));
         }
+        this.positionCursor();
     }
     typeChar(char) {
+        const actualChar = this.getCurrChar();
+        if (actualChar === char) {
+            this.typeMoveForward();
+        }
+        else {
+            this.typedWrong();
+        }
+    }
+    typeMoveForward() {
         this.currCharIndex++;
+        this.positionCursor();
+    }
+    typedWrong() {
+        this.positionCursor();
+    }
+    positionCursor() {
         this.cursor.positionTo(this.getCurrCharElm());
-        console.log(this.cursor);
     }
     appendTo(elm) {
         elm.appendChild(this.elm);

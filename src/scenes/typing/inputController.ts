@@ -4,7 +4,7 @@ type InputControllerCallback = (value: string) => void;
 
 class InputController {
     private elm: HTMLDivElement;
-    private input: HTMLInputElement;
+    private input: HTMLTextAreaElement;
 
     private inputHandlers: InputControllerCallback[] = [];
 
@@ -27,8 +27,8 @@ class InputController {
         return div;
     }
 
-    private createInput(): HTMLInputElement {
-        const input = document.createElement("input");
+    private createInput(): HTMLTextAreaElement {
+        const input = document.createElement("textarea");
         input.classList.add("input");
         this.elm.appendChild(input);
         input.addEventListener("input", this.onInputHandler.bind(this));

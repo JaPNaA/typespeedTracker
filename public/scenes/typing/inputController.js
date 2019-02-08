@@ -17,7 +17,7 @@ class InputController {
         return div;
     }
     createInput() {
-        const input = document.createElement("input");
+        const input = document.createElement("textarea");
         input.classList.add("input");
         this.elm.appendChild(input);
         input.addEventListener("input", this.onInputHandler.bind(this));

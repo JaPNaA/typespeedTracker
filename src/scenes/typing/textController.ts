@@ -21,17 +21,38 @@ class TextController {
 
     public setText(text: string): void {
         const lines = text.split("\n");
+
         this.clearElm();
         this.text = text;
+
         for (let line of lines) {
             this.textElm.appendChild(this.createLineElm(line));
         }
+
+        this.positionCursor();
     }
 
     public typeChar(char: string): void {
+        const actualChar = this.getCurrChar();
+
+        if (actualChar === char) {
+            this.typeMoveForward();
+        } else {
+            this.typedWrong();
+        }
+    }
+
+    private typeMoveForward() {
         this.currCharIndex++;
+        this.positionCursor();
+    }
+
+    private typedWrong() {
+        this.positionCursor();
+    }
+
+    private positionCursor() {
         this.cursor.positionTo(this.getCurrCharElm());
-        console.log(this.cursor);
     }
 
     public appendTo(elm: HTMLElement): void {
