@@ -79,5 +79,8 @@ class TextController {
     getCurrCharElm() {
         return this.chars[this.currCharIndex];
     }
+    destory() {
+        this.cursor.destory();
+    }
 }
 export default TextController;

@@ -106,6 +106,10 @@ class TextController {
     private getCurrCharElm(): HTMLSpanElement {
         return this.chars[this.currCharIndex];
     }
+
+    public destory() {
+        this.cursor.destory();
+    }
 }
 
 export default TextController;

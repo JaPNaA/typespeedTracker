@@ -26,6 +26,7 @@ class TypingScene extends Scene {
         if (this.elm.parentElement) {
             this.elm.parentElement.removeChild(this.elm);
         }
+        this.text.destory();
     }
 
     private createElm(): HTMLDivElement {
