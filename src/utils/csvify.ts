@@ -16,11 +16,15 @@ function tableToString(rows: CSVifyableValue[][]): string {
 
 function sanitizeText(text: CSVifyableValue): string {
     if (typeof text === "string") {
-        return text
-            .replace(/\\/, "\\\\")
-            .replace(/,/g, "\\,")
-            .replace(/\n/g, "\\n")
-            .replace(/\x08/g, "\\b");
+        return '"' +
+
+            text
+                .replace(/\\/, "\\\\")
+                .replace(/"/g, "\"\"")
+                .replace(/\n/g, "\\n")
+                .replace(/\x08/g, "\\b")
+
+            + '"';
     } else if (typeof text === "boolean") {
         return text ? "TRUE" : "FALSE";
     } else if (typeof text === "number") {
