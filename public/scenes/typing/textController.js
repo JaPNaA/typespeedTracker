@@ -1,12 +1,13 @@
 import TextCursor from "./textCursor.js";
 class TextController {
-    constructor() {
+    constructor(infoCollecter) {
         this.chars = [];
         this.text = "";
         this.currCharIndex = 0;
         this.elm = this.createElm();
         this.textElm = this.createTextElm();
         this.cursor = new TextCursor();
+        this.infoCollecter = infoCollecter;
         this.cursor.appendTo(this.elm);
         this.elm.appendChild(this.textElm);
     }
@@ -21,10 +22,13 @@ class TextController {
     }
     typeChar(char) {
         const actualChar = this.getCurrChar();
-        if (actualChar === char) {
+        const isCorrect = actualChar === char;
+        const isBackspace = char === "\b";
+        this.infoCollecter.logKey(char, actualChar, !isCorrect, isBackspace);
+        if (isCorrect) {
             this.typeMoveForward();
         }
-        else if (char === "\b") {
+        else if (isBackspace) {
             this.typeBackspace();
         }
         else {

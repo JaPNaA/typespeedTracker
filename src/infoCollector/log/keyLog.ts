@@ -1,16 +1,14 @@
-import Log from "./log";
+import Log from "./log.js";
 
 class KeyLog extends Log {
-    keyCode: number;
     keyStr: string;
     correctKey: string;
     isIncorrect: boolean;
     isBackspace: boolean;
 
-    constructor(keyCode: number, keyStr: string, correctKey: string, isIncorrect: boolean, isBackspace: boolean) {
+    constructor(keyStr: string, correctKey: string, isIncorrect: boolean, isBackspace: boolean) {
         super();
 
-        this.keyCode = keyCode;
         this.keyStr = keyStr;
         this.correctKey = correctKey;
         this.isIncorrect = isIncorrect;

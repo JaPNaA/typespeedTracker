@@ -1,8 +1,7 @@
-import Log from "./log";
+import Log from "./log.js";
 class KeyLog extends Log {
-    constructor(keyCode, keyStr, correctKey, isIncorrect, isBackspace) {
+    constructor(keyStr, correctKey, isIncorrect, isBackspace) {
         super();
-        this.keyCode = keyCode;
         this.keyStr = keyStr;
         this.correctKey = correctKey;
         this.isIncorrect = isIncorrect;

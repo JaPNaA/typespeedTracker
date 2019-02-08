@@ -9,10 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import Scene from "../../scene.js";
 import TextController from "./textController.js";
 import InputController from "./inputController.js";
+import InfoCollector from "../../infoCollector/infoCollector.js";
 class TypingScene extends Scene {
     constructor() {
         super();
         this.elm = this.createElm();
+        this.infoCollecter = new InfoCollector();
         this.text = this.createText();
         this.input = this.createInput();
         this.setup();
@@ -32,7 +34,7 @@ class TypingScene extends Scene {
         return elm;
     }
     createText() {
-        const controller = new TextController();
+        const controller = new TextController(this.infoCollecter);
         controller.appendTo(this.elm);
         return controller;
     }

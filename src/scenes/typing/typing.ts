@@ -1,17 +1,20 @@
 import Scene from "../../scene.js";
 import TextController from "./textController.js";
 import InputController from "./inputController.js";
+import InfoCollector from "../../infoCollector/infoCollector.js";
 
 class TypingScene extends Scene {
     protected elm: HTMLDivElement;
 
     private text: TextController;
     private input: InputController;
+    private infoCollecter: InfoCollector;
 
     constructor() {
         super();
 
         this.elm = this.createElm();
+        this.infoCollecter = new InfoCollector();
         this.text = this.createText();
         this.input = this.createInput();
 
@@ -36,7 +39,7 @@ class TypingScene extends Scene {
     }
 
     private createText(): TextController {
-        const controller = new TextController();
+        const controller = new TextController(this.infoCollecter);
         controller.appendTo(this.elm);
         return controller;
     }

@@ -1,4 +1,5 @@
 import TextCursor from "./textCursor.js";
+import InfoCollector from "../../infoCollector/infoCollector.js";
 
 class TextController {
     private elm: HTMLDivElement;
@@ -9,11 +10,13 @@ class TextController {
     private currCharIndex: number = 0;
 
     private cursor: TextCursor;
+    private infoCollecter: InfoCollector;
 
-    constructor() {
+    constructor(infoCollecter: InfoCollector) {
         this.elm = this.createElm();
         this.textElm = this.createTextElm();
         this.cursor = new TextCursor();
+        this.infoCollecter = infoCollecter;
 
         this.cursor.appendTo(this.elm);
         this.elm.appendChild(this.textElm);
@@ -34,10 +37,14 @@ class TextController {
 
     public typeChar(char: string): void {
         const actualChar = this.getCurrChar();
+        const isCorrect = actualChar === char;
+        const isBackspace = char === "\b";
 
-        if (actualChar === char) {
+        this.infoCollecter.logKey(char, actualChar, !isCorrect, isBackspace);
+
+        if (isCorrect) {
             this.typeMoveForward();
-        } else if (char === "\b") {
+        } else if (isBackspace) {
             this.typeBackspace();
         } else {
             this.typedWrong();
