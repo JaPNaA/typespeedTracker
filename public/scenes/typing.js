@@ -10,22 +10,35 @@ import Scene from "../scene.js";
 class TypingScene extends Scene {
     constructor() {
         super();
+        this.elm = this.createElm();
         this.textToType = this.createTextToTypeElement();
         this.input = this.createInput();
         this.setup();
     }
     setup() {
+        this.textToType.innerText = "Loading...";
         this.getText();
     }
-    destory() { }
+    destory() {
+        if (this.elm.parentElement) {
+            this.elm.parentElement.removeChild(this.elm);
+        }
+    }
+    createElm() {
+        const elm = document.createElement("div");
+        elm.classList.add("typingScene");
+        return elm;
+    }
     createTextToTypeElement() {
-        const div = document.createElement("div");
-        div.classList.add("textToType");
-        return div;
+        const textToType = document.createElement("div");
+        textToType.classList.add("textToType");
+        this.elm.appendChild(textToType);
+        return textToType;
     }
     createInput() {
         const input = document.createElement("input");
         input.classList.add("input");
+        this.elm.appendChild(input);
         return input;
     }
     getText() {
