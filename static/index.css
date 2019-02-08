@@ -10,3 +10,22 @@
     border-left: 1.5px solid #161616e8;
     transition: cubic-bezier(0.2, 0.68, 0.61, 0.94) 0.05s;
 }
+
+.letter {
+    color: #000000;
+    opacity: 1;
+}
+
+.letter.untouched, .letter.removed {
+    opacity: 0.6;
+}
+
+.letter.correct {
+    opacity: 1;
+}
+
+.letter.wrong {
+    opacity: 1;
+    background: #ff2020;
+    color: #ffffff;
+}
