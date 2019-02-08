@@ -32,15 +32,40 @@ class TextController {
         }
     }
     typeMoveForward() {
+        this.setCurrElmCorrect();
         this.currCharIndex++;
         this.positionCursor();
     }
     typeBackspace() {
+        this.setCurrElmRemoved();
+        if (this.currCharIndex <= 0) {
+            return;
+        }
         this.currCharIndex--;
         this.positionCursor();
     }
     typedWrong() {
+        this.setCurrElmWrong();
         this.positionCursor();
+    }
+    setCurrElmCorrect() {
+        this.clearCurrElmClasses();
+        this.getCurrCharElm().classList.add("correct");
+    }
+    setCurrElmRemoved() {
+        this.clearCurrElmClasses();
+        this.getCurrCharElm().classList.add("removed");
+    }
+    setCurrElmWrong() {
+        this.clearCurrElmClasses();
+        this.getCurrCharElm().classList.add("wrong");
+    }
+    clearCurrElmClasses() {
+        const currElm = this.getCurrCharElm();
+        currElm.classList.remove("untouched");
+        currElm.classList.remove("removed");
+        currElm.classList.remove("wrong");
+        currElm.classList.remove("correct");
     }
     positionCursor() {
         this.cursor.positionTo(this.getCurrCharElm());

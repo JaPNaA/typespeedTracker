@@ -45,17 +45,44 @@ class TextController {
     }
 
     private typeMoveForward() {
+        this.setCurrElmCorrect();
         this.currCharIndex++;
         this.positionCursor();
     }
 
     private typeBackspace() {
+        this.setCurrElmRemoved();
+        if (this.currCharIndex <= 0) { return; }
         this.currCharIndex--;
         this.positionCursor();
     }
 
     private typedWrong() {
+        this.setCurrElmWrong();
         this.positionCursor();
+    }
+
+    private setCurrElmCorrect() {
+        this.clearCurrElmClasses();
+        this.getCurrCharElm().classList.add("correct");
+    }
+
+    private setCurrElmRemoved() {
+        this.clearCurrElmClasses();
+        this.getCurrCharElm().classList.add("removed");
+    }
+
+    private setCurrElmWrong() {
+        this.clearCurrElmClasses();
+        this.getCurrCharElm().classList.add("wrong");
+    }
+
+    private clearCurrElmClasses() {
+        const currElm = this.getCurrCharElm();
+        currElm.classList.remove("untouched");
+        currElm.classList.remove("removed");
+        currElm.classList.remove("wrong");
+        currElm.classList.remove("correct");
     }
 
     private positionCursor() {

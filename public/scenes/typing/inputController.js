@@ -42,9 +42,11 @@ class InputController {
         }
     }
     backspaceToLastSpace() {
+        let prevChar;
         do {
             this.backspace();
-        } while (this.textController.getPrevChar() != ' ');
+            prevChar = this.textController.getPrevChar();
+        } while (prevChar !== ' ' && prevChar !== undefined);
     }
     backspace() {
         this.input.value = "\b";
