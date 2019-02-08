@@ -27,7 +27,7 @@ class App {
     }
 }
 
-// for debugging on mobile
+// for debugging on
 onerror = function (e) { document.title = e.toString(); };
 
 console.log(new App());

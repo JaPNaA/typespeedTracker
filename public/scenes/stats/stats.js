@@ -1,15 +1,24 @@
 import Scene from "../../scene.js";
 import CSVify from "../../utils/csvify.js";
+import ReplayScene from "../replay/replay.js";
 class Stats extends Scene {
     constructor(app, infoCollector) {
         super(app);
         this.infoCollector = infoCollector;
         this.elm = this.createElm();
+        this.replayButton = this.createReplayButton();
     }
     createElm() {
         const div = document.createElement("div");
         div.classList.add("stats");
         return div;
+    }
+    createReplayButton() {
+        const button = document.createElement("button");
+        button.classList.add("replay");
+        button.addEventListener("click", () => this.app.switchScene(new ReplayScene(this.app, this.infoCollector)));
+        this.elm.appendChild(button);
+        return button;
     }
     setup() {
         this.createH1();
