@@ -4,6 +4,8 @@ import InfoCollector from "../../infoCollector/infoCollector.js";
 class TextController {
     public done: boolean = false;
 
+    private onDoneCallbacks: Function[] = [];
+
     private elm: HTMLDivElement;
     private textElm: HTMLDivElement;
 
@@ -22,6 +24,10 @@ class TextController {
 
         this.cursor.appendTo(this.elm);
         this.elm.appendChild(this.textElm);
+    }
+
+    public onDone(cb: Function) {
+        this.onDoneCallbacks.push(cb);
     }
 
     public setText(text: string): void {
@@ -57,40 +63,47 @@ class TextController {
         this.checkDone();
     }
 
-    private typeMoveForward() {
+    private typeMoveForward(): void {
         this.setCurrElmCorrect();
         this.currCharIndex++;
         this.positionCursor();
     }
 
-    private typeBackspace() {
+    private typeBackspace(): void {
+        this.setCurrElmUntouched();
+
         if (this.currCharIndex <= 0) { return; }
         this.currCharIndex--;
         this.setCurrElmRemoved();
         this.positionCursor();
     }
 
-    private typedWrong() {
+    private typedWrong(): void {
         this.setCurrElmWrong();
         this.positionCursor();
     }
 
-    private setCurrElmCorrect() {
+    private setCurrElmCorrect(): void {
         this.clearCurrElmClasses();
         this.getCurrCharElm().classList.add("correct");
     }
 
-    private setCurrElmRemoved() {
+    private setCurrElmRemoved(): void {
         this.clearCurrElmClasses();
         this.getCurrCharElm().classList.add("removed");
     }
 
-    private setCurrElmWrong() {
+    private setCurrElmWrong(): void {
         this.clearCurrElmClasses();
         this.getCurrCharElm().classList.add("wrong");
     }
 
-    private clearCurrElmClasses() {
+    private setCurrElmUntouched(): void {
+        this.clearCurrElmClasses();
+        this.getCurrCharElm().classList.add("untouched");
+    }
+
+    private clearCurrElmClasses(): void {
         const currElm = this.getCurrCharElm();
         currElm.classList.remove("untouched");
         currElm.classList.remove("removed");
@@ -98,14 +111,14 @@ class TextController {
         currElm.classList.remove("correct");
     }
 
-    private positionCursor() {
+    private positionCursor(): void {
         this.cursor.positionTo(this.getCurrCharElm());
     }
 
-    private checkDone() {
+    private checkDone(): void {
         if (this.currCharIndex === this.text.length) {
             if (!this.done) {
-                console.log("Done!");
+                this.dispatchDone();
             }
 
             this.done = true;
@@ -154,6 +167,12 @@ class TextController {
         elm.classList.add("textToType");
         elm.innerText = "Loading...";
         return elm;
+    }
+
+    private dispatchDone(): void {
+        for (let cb of this.onDoneCallbacks) {
+            cb();
+        }
     }
 
     public getCurrChar(): string {

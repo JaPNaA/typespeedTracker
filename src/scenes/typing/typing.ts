@@ -41,6 +41,7 @@ class TypingScene extends Scene {
     private createText(): TextController {
         const controller = new TextController(this.infoCollecter);
         controller.appendTo(this.elm);
+        controller.onDone(function () { console.log("Done!!"); });
         return controller;
     }
 

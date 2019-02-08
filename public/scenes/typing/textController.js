@@ -2,6 +2,7 @@ import TextCursor from "./textCursor.js";
 class TextController {
     constructor(infoCollecter) {
         this.done = false;
+        this.onDoneCallbacks = [];
         this.chars = [];
         this.text = "";
         this.currCharIndex = 0;
@@ -11,6 +12,9 @@ class TextController {
         this.infoCollecter = infoCollecter;
         this.cursor.appendTo(this.elm);
         this.elm.appendChild(this.textElm);
+    }
+    onDone(cb) {
+        this.onDoneCallbacks.push(cb);
     }
     setText(text) {
         const lines = text.split("\n");
@@ -46,6 +50,7 @@ class TextController {
         this.positionCursor();
     }
     typeBackspace() {
+        this.setCurrElmUntouched();
         if (this.currCharIndex <= 0) {
             return;
         }
@@ -69,6 +74,10 @@ class TextController {
         this.clearCurrElmClasses();
         this.getCurrCharElm().classList.add("wrong");
     }
+    setCurrElmUntouched() {
+        this.clearCurrElmClasses();
+        this.getCurrCharElm().classList.add("untouched");
+    }
     clearCurrElmClasses() {
         const currElm = this.getCurrCharElm();
         currElm.classList.remove("untouched");
@@ -82,7 +91,7 @@ class TextController {
     checkDone() {
         if (this.currCharIndex === this.text.length) {
             if (!this.done) {
-                console.log("Done!");
+                this.dispatchDone();
             }
             this.done = true;
         }
@@ -121,6 +130,11 @@ class TextController {
         elm.classList.add("textToType");
         elm.innerText = "Loading...";
         return elm;
+    }
+    dispatchDone() {
+        for (let cb of this.onDoneCallbacks) {
+            cb();
+        }
     }
     getCurrChar() {
         return this.text[this.currCharIndex];
