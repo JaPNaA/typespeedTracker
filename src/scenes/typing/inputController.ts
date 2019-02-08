@@ -47,10 +47,13 @@ class InputController {
     }
 
     private onInputHandler(): void {
-        const value = this.nextValue();
+        let value = this.nextValue();
+        while (value) {
+            for (let cb of this.inputHandlers) {
+                cb(value);
+            }
 
-        for (let cb of this.inputHandlers) {
-            cb(value);
+            value = this.nextValue();
         }
     }
 
@@ -79,8 +82,8 @@ class InputController {
 
     private nextValue(): string {
         const value = sanitizeSpecialChars(this.input.value);
-        this.input.value = "";
-        return value;
+        this.input.value = value.slice(1);
+        return value[0];
     }
 }
 

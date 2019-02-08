@@ -30,9 +30,12 @@ class InputController {
         return input;
     }
     onInputHandler() {
-        const value = this.nextValue();
-        for (let cb of this.inputHandlers) {
-            cb(value);
+        let value = this.nextValue();
+        while (value) {
+            for (let cb of this.inputHandlers) {
+                cb(value);
+            }
+            value = this.nextValue();
         }
     }
     onKeydownHandler(e) {
@@ -58,8 +61,8 @@ class InputController {
     }
     nextValue() {
         const value = sanitizeSpecialChars(this.input.value);
-        this.input.value = "";
-        return value;
+        this.input.value = value.slice(1);
+        return value[0];
     }
 }
 export default InputController;

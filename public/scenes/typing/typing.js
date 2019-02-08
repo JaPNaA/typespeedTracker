@@ -16,6 +16,7 @@ class TypingScene extends Scene {
         super(app);
         this.elm = this.createElm();
         this.infoCollecter = new InfoCollector();
+        this.endButton = this.createEndButton();
         this.text = this.createText();
         this.input = this.createInput();
         this.registerKeydownHandler();
@@ -53,6 +54,14 @@ class TypingScene extends Scene {
         addEventListener("touchstart", boundFocusingHandler);
         this.boundKeydownHandler = boundFocusingHandler;
     }
+    createEndButton() {
+        const button = document.createElement("button");
+        button.innerText = "End prematurely";
+        button.addEventListener("click", this.onDone.bind(this));
+        button.classList.add("end");
+        this.elm.appendChild(button);
+        return button;
+    }
     focusingHandler() {
         this.input.focus();
     }
@@ -60,7 +69,6 @@ class TypingScene extends Scene {
         this.text.typeChar(value);
     }
     onDone() {
-        console.log("Done!!");
         this.app.switchScene(new Stats(this.app, this.infoCollecter));
     }
     getText() {

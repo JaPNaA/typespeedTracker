@@ -43,6 +43,10 @@
     font-size: 14px;
 }
 
+.end {
+    color: #e70606;
+}
+
 textarea {
     width: 100%;
     height: 80%;

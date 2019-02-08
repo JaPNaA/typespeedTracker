@@ -8,6 +8,7 @@ import Stats from "../stats/stats.js";
 class TypingScene extends Scene {
     protected elm: HTMLDivElement;
 
+    private endButton: HTMLButtonElement;
     private text: TextController;
     private input: InputController;
     private infoCollecter: InfoCollector;
@@ -19,6 +20,7 @@ class TypingScene extends Scene {
 
         this.elm = this.createElm();
         this.infoCollecter = new InfoCollector();
+        this.endButton = this.createEndButton();
         this.text = this.createText();
         this.input = this.createInput();
 
@@ -65,6 +67,15 @@ class TypingScene extends Scene {
         this.boundKeydownHandler = boundFocusingHandler;
     }
 
+    private createEndButton(): HTMLButtonElement {
+        const button = document.createElement("button");
+        button.innerText = "End prematurely";
+        button.addEventListener("click", this.onDone.bind(this));
+        button.classList.add("end");
+        this.elm.appendChild(button);
+        return button;
+    }
+
     private focusingHandler(): void {
         this.input.focus();
     }
@@ -74,7 +85,6 @@ class TypingScene extends Scene {
     }
 
     private onDone() {
-        console.log("Done!!");
         this.app.switchScene(new Stats(this.app, this.infoCollecter));
     }
 
