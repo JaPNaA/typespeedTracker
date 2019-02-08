@@ -15,11 +15,19 @@ function tableToString(rows: CSVifyableValue[][]): string {
 }
 
 function sanitizeText(text: CSVifyableValue): string {
-    return text.toString()
-        .replace(/\\/, "\\\\")
-        .replace(/,/g, "\\,")
-        .replace(/\n/g, "\\n")
-        .replace(/\x08/g, "\\b");
+    if (typeof text === "string") {
+        return text
+            .replace(/\\/, "\\\\")
+            .replace(/,/g, "\\,")
+            .replace(/\n/g, "\\n")
+            .replace(/\x08/g, "\\b");
+    } else if (typeof text === "boolean") {
+        return text ? "TRUE" : "FALSE";
+    } else if (typeof text === "number") {
+        return text.toString().replace(/(.+)\.(\d{3})\d+/, "$1.$2");
+    } else {
+        return "NULL";
+    }
 }
 
 export default function CSVify(objs: { [x: string]: CSVifyableValue }[]): string {
