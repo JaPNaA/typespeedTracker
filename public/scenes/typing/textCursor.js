@@ -12,6 +12,9 @@ class TextCursor {
     appendTo(elm) {
         elm.appendChild(this.elm);
     }
+    append(elm) {
+        this.elm.appendChild(elm);
+    }
     destory() {
         removeEventListener("resize", this.boundResizeHandler);
     }

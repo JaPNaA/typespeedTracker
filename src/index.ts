@@ -27,6 +27,9 @@ class App {
     }
 }
 
+// for debugging on mobile
+onerror = function (e) { document.title = e.toString(); };
+
 console.log(new App());
 
 export default App;

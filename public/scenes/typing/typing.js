@@ -18,6 +18,7 @@ class TypingScene extends Scene {
         this.infoCollecter = new InfoCollector();
         this.text = this.createText();
         this.input = this.createInput();
+        this.registerKeydownHandler();
     }
     setup() {
         this.getText();
@@ -25,6 +26,9 @@ class TypingScene extends Scene {
     destory() {
         this.removeSelf();
         this.text.destory();
+        if (this.boundKeydownHandler) {
+            removeEventListener("keydown", this.boundKeydownHandler);
+        }
     }
     createElm() {
         const elm = document.createElement("div");
@@ -42,6 +46,15 @@ class TypingScene extends Scene {
         input.onInput(this.onInput.bind(this));
         input.appendTo(this.elm);
         return input;
+    }
+    registerKeydownHandler() {
+        const boundFocusingHandler = this.focusingHandler.bind(this);
+        addEventListener("keydown", boundFocusingHandler);
+        addEventListener("touchstart", boundFocusingHandler);
+        this.boundKeydownHandler = boundFocusingHandler;
+    }
+    focusingHandler() {
+        this.input.focus();
     }
     onInput(value) {
         this.text.typeChar(value);

@@ -20,6 +20,10 @@ class TextCursor {
         elm.appendChild(this.elm);
     }
 
+    public append(elm: HTMLElement): void {
+        this.elm.appendChild(elm);
+    }
+
     public destory() {
         removeEventListener("resize", this.boundResizeHandler);
     }

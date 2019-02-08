@@ -5,6 +5,10 @@ class InputController {
         this.elm = this.createElm();
         this.input = this.createInput();
         this.textController = textController;
+        textController.cursor.append(this.input);
+    }
+    focus() {
+        this.input.focus();
     }
     onInput(cb) {
         this.inputHandlers.push(cb);

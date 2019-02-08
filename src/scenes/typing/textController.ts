@@ -3,6 +3,7 @@ import InfoCollector from "../../infoCollector/infoCollector.js";
 
 class TextController {
     public done: boolean = false;
+    public cursor: TextCursor;
 
     private onDoneCallbacks: Function[] = [];
 
@@ -13,7 +14,6 @@ class TextController {
     private text: string = "";
     private currCharIndex: number = 0;
 
-    private cursor: TextCursor;
     private infoCollecter: InfoCollector;
 
     constructor(infoCollecter: InfoCollector) {

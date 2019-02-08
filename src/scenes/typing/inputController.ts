@@ -16,6 +16,11 @@ class InputController {
         this.input = this.createInput();
 
         this.textController = textController;
+        textController.cursor.append(this.input);
+    }
+
+    public focus() {
+        this.input.focus();
     }
 
     public onInput(cb: InputControllerCallback) {
