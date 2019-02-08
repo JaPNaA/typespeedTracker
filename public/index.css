@@ -6,5 +6,7 @@
 
 .cursor {
     position: absolute;
-    background: #ff888888;
+    background: transparent;
+    border-left: 1.5px solid #161616e8;
+    transition: cubic-bezier(0.2, 0.68, 0.61, 0.94) 0.05s;
 }
