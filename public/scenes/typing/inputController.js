@@ -46,7 +46,7 @@ class InputController {
         do {
             this.backspace();
             prevChar = this.textController.getPrevChar();
-        } while (prevChar !== ' ' && prevChar !== undefined);
+        } while (prevChar !== ' ' && prevChar !== undefined && !this.textController.done);
     }
     backspace() {
         this.input.value = "\b";

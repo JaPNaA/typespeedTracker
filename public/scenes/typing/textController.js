@@ -1,6 +1,7 @@
 import TextCursor from "./textCursor.js";
 class TextController {
     constructor(infoCollecter) {
+        this.done = false;
         this.chars = [];
         this.text = "";
         this.currCharIndex = 0;
@@ -21,6 +22,9 @@ class TextController {
         this.positionCursor();
     }
     typeChar(char) {
+        if (this.done) {
+            return;
+        }
         const actualChar = this.getCurrChar();
         const isCorrect = actualChar === char;
         const isBackspace = char === "\b";
@@ -34,6 +38,7 @@ class TextController {
         else {
             this.typedWrong();
         }
+        this.checkDone();
     }
     typeMoveForward() {
         this.setCurrElmCorrect();
@@ -41,11 +46,11 @@ class TextController {
         this.positionCursor();
     }
     typeBackspace() {
-        this.setCurrElmRemoved();
         if (this.currCharIndex <= 0) {
             return;
         }
         this.currCharIndex--;
+        this.setCurrElmRemoved();
         this.positionCursor();
     }
     typedWrong() {
@@ -73,6 +78,14 @@ class TextController {
     }
     positionCursor() {
         this.cursor.positionTo(this.getCurrCharElm());
+    }
+    checkDone() {
+        if (this.currCharIndex === this.text.length) {
+            if (!this.done) {
+                console.log("Done!");
+            }
+            this.done = true;
+        }
     }
     appendTo(elm) {
         elm.appendChild(this.elm);

@@ -64,7 +64,7 @@ class InputController {
         do {
             this.backspace();
             prevChar = this.textController.getPrevChar();
-        } while (prevChar !== ' ' && prevChar !== undefined);
+        } while (prevChar !== ' ' && prevChar !== undefined && !this.textController.done);
     }
 
     private backspace() {

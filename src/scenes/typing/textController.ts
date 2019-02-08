@@ -2,6 +2,8 @@ import TextCursor from "./textCursor.js";
 import InfoCollector from "../../infoCollector/infoCollector.js";
 
 class TextController {
+    public done: boolean = false;
+
     private elm: HTMLDivElement;
     private textElm: HTMLDivElement;
 
@@ -36,6 +38,8 @@ class TextController {
     }
 
     public typeChar(char: string): void {
+        if (this.done) { return; }
+
         const actualChar = this.getCurrChar();
         const isCorrect = actualChar === char;
         const isBackspace = char === "\b";
@@ -49,6 +53,8 @@ class TextController {
         } else {
             this.typedWrong();
         }
+
+        this.checkDone();
     }
 
     private typeMoveForward() {
@@ -58,9 +64,9 @@ class TextController {
     }
 
     private typeBackspace() {
-        this.setCurrElmRemoved();
         if (this.currCharIndex <= 0) { return; }
         this.currCharIndex--;
+        this.setCurrElmRemoved();
         this.positionCursor();
     }
 
@@ -94,6 +100,16 @@ class TextController {
 
     private positionCursor() {
         this.cursor.positionTo(this.getCurrCharElm());
+    }
+
+    private checkDone() {
+        if (this.currCharIndex === this.text.length) {
+            if (!this.done) {
+                console.log("Done!");
+            }
+
+            this.done = true;
+        }
     }
 
     public appendTo(elm: HTMLElement): void {
