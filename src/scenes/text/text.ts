@@ -9,19 +9,21 @@ class TextScene extends Scene {
 
     protected text: TextController;
     protected input: InputController;
-    protected infoCollecter: InfoCollector;
+    protected infoCollecter?: InfoCollector;
 
-    constructor(app: App) {
+    protected getTextPromise?: Promise<void>;
+
+    constructor(app: App, infoCollector?: InfoCollector) {
         super(app);
 
+        this.infoCollecter = infoCollector;
         this.elm = this.createElm();
-        this.infoCollecter = new InfoCollector();
         this.text = this.createText();
         this.input = this.createInput();
     }
 
-    public setup(): void {
-        this.getText();
+    public setup() {
+        this.getTextPromise = this.getText();
     }
 
     public destory(): void {
@@ -49,7 +51,7 @@ class TextScene extends Scene {
         return input;
     }
 
-    private onInput(value: string) {
+    protected onInput(value: string) {
         this.text.typeChar(value);
     }
 

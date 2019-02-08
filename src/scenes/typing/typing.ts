@@ -1,13 +1,14 @@
 import App from "../../index.js";
 import Stats from "../stats/stats.js";
 import TextScene from "../text/text.js";
+import InfoCollector from "../../infoCollector/infoCollector.js";
 
 class TypingScene extends TextScene {
     private endButton: HTMLButtonElement;
     private boundKeydownHandler?: EventListenerOrEventListenerObject;
 
     constructor(app: App) {
-        super(app);
+        super(app, new InfoCollector());
 
         this.endButton = this.createEndButton();
         this.registerKeydownHandler();
@@ -42,7 +43,9 @@ class TypingScene extends TextScene {
     }
 
     protected onDone() {
-        this.app.switchScene(new Stats(this.app, this.infoCollecter));
+        if (this.infoCollecter) {
+            this.app.switchScene(new Stats(this.app, this.infoCollecter));
+        }
     }
 }
 

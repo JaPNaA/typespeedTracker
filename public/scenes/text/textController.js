@@ -32,7 +32,9 @@ class TextController {
         const actualChar = this.getCurrChar();
         const isCorrect = actualChar === char;
         const isBackspace = char === "\b";
-        this.infoCollecter.logKey(char, actualChar, this.currCharIndex, !isCorrect, isBackspace);
+        if (this.infoCollecter) {
+            this.infoCollecter.logKey(char, actualChar, this.currCharIndex, !isCorrect, isBackspace);
+        }
         if (isCorrect) {
             this.typeMoveForward();
         }

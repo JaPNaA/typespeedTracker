@@ -32,7 +32,7 @@ class Stats extends Scene {
         const button = document.createElement("button");
         button.classList.add("replay");
         button.innerText = "View Replay";
-        button.addEventListener("click", () => this.app.switchScene(new ReplayScene(this.app, this.infoCollector)));
+        button.addEventListener("click", () => this.app.switchScene(new ReplayScene(this.app, this.infoCollector.logs)));
         this.elm.appendChild(button)
         return button;
     }

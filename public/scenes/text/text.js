@@ -9,17 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import Scene from "../../scene.js";
 import TextController from "./textController.js";
 import InputController from "./inputController.js";
-import InfoCollector from "../../infoCollector/infoCollector.js";
 class TextScene extends Scene {
-    constructor(app) {
+    constructor(app, infoCollector) {
         super(app);
+        this.infoCollecter = infoCollector;
         this.elm = this.createElm();
-        this.infoCollecter = new InfoCollector();
         this.text = this.createText();
         this.input = this.createInput();
     }
     setup() {
-        this.getText();
+        this.getTextPromise = this.getText();
     }
     destory() {
         this.removeSelf();

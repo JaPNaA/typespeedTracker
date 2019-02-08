@@ -14,9 +14,9 @@ class TextController {
     private text: string = "";
     private currCharIndex: number = 0;
 
-    private infoCollecter: InfoCollector;
+    private infoCollecter?: InfoCollector;
 
-    constructor(infoCollecter: InfoCollector) {
+    constructor(infoCollecter?: InfoCollector) {
         this.elm = this.createElm();
         this.textElm = this.createTextElm();
         this.cursor = new TextCursor();
@@ -50,7 +50,9 @@ class TextController {
         const isCorrect = actualChar === char;
         const isBackspace = char === "\b";
 
-        this.infoCollecter.logKey(char, actualChar, this.currCharIndex, !isCorrect, isBackspace);
+        if (this.infoCollecter) {
+            this.infoCollecter.logKey(char, actualChar, this.currCharIndex, !isCorrect, isBackspace);
+        }
 
         if (isCorrect) {
             this.typeMoveForward();
