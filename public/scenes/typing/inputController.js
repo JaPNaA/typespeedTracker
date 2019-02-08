@@ -1,9 +1,10 @@
 import sanitizeSpecialChars from "../../utils/sanitizeSpecialChars.js";
 class InputController {
-    constructor() {
+    constructor(textController) {
         this.inputHandlers = [];
         this.elm = this.createElm();
         this.input = this.createInput();
+        this.textController = textController;
     }
     onInput(cb) {
         this.inputHandlers.push(cb);
@@ -21,6 +22,7 @@ class InputController {
         input.classList.add("input");
         this.elm.appendChild(input);
         input.addEventListener("input", this.onInputHandler.bind(this));
+        input.addEventListener("keydown", this.onKeydownHandler.bind(this));
         return input;
     }
     onInputHandler() {
@@ -28,6 +30,25 @@ class InputController {
         for (let cb of this.inputHandlers) {
             cb(value);
         }
+    }
+    onKeydownHandler(e) {
+        if (e.keyCode === 8) {
+            if (e.ctrlKey) {
+                this.backspaceToLastSpace();
+            }
+            else {
+                this.backspace();
+            }
+        }
+    }
+    backspaceToLastSpace() {
+        do {
+            this.backspace();
+        } while (this.textController.getPrevChar() != ' ');
+    }
+    backspace() {
+        this.input.value = "\b";
+        this.onInputHandler();
     }
     nextValue() {
         const value = sanitizeSpecialChars(this.input.value);

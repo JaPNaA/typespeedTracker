@@ -1,4 +1,5 @@
 import sanitizeSpecialChars from "../../utils/sanitizeSpecialChars.js";
+import TextController from "./textController.js";
 
 type InputControllerCallback = (value: string) => void;
 
@@ -6,11 +7,15 @@ class InputController {
     private elm: HTMLDivElement;
     private input: HTMLTextAreaElement;
 
+    private textController: TextController;
+
     private inputHandlers: InputControllerCallback[] = [];
 
-    constructor() {
+    constructor(textController: TextController) {
         this.elm = this.createElm();
         this.input = this.createInput();
+
+        this.textController = textController;
     }
 
     public onInput(cb: InputControllerCallback) {
@@ -32,6 +37,7 @@ class InputController {
         input.classList.add("input");
         this.elm.appendChild(input);
         input.addEventListener("input", this.onInputHandler.bind(this));
+        input.addEventListener("keydown", this.onKeydownHandler.bind(this));
         return input;
     }
 
@@ -41,6 +47,27 @@ class InputController {
         for (let cb of this.inputHandlers) {
             cb(value);
         }
+    }
+
+    private onKeydownHandler(e: KeyboardEvent): void {
+        if (e.keyCode === 8) {
+            if (e.ctrlKey) {
+                this.backspaceToLastSpace();
+            } else {
+                this.backspace();
+            }
+        }
+    }
+
+    private backspaceToLastSpace() {
+        do {
+            this.backspace();
+        } while (this.textController.getPrevChar() != ' ')
+    }
+
+    private backspace() {
+        this.input.value = "\b";
+        this.onInputHandler();
     }
 
     private nextValue(): string {

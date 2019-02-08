@@ -37,6 +37,8 @@ class TextController {
 
         if (actualChar === char) {
             this.typeMoveForward();
+        } else if (char === "\b") {
+            this.typeBackspace();
         } else {
             this.typedWrong();
         }
@@ -44,6 +46,11 @@ class TextController {
 
     private typeMoveForward() {
         this.currCharIndex++;
+        this.positionCursor();
+    }
+
+    private typeBackspace() {
+        this.currCharIndex--;
         this.positionCursor();
     }
 
@@ -99,8 +106,12 @@ class TextController {
         return elm;
     }
 
-    private getCurrChar(): string {
+    public getCurrChar(): string {
         return this.text[this.currCharIndex];
+    }
+
+    public getPrevChar(): string {
+        return this.text[this.currCharIndex - 1];
     }
 
     private getCurrCharElm(): HTMLSpanElement {

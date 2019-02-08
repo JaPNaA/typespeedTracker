@@ -24,12 +24,19 @@ class TextController {
         if (actualChar === char) {
             this.typeMoveForward();
         }
+        else if (char === "\b") {
+            this.typeBackspace();
+        }
         else {
             this.typedWrong();
         }
     }
     typeMoveForward() {
         this.currCharIndex++;
+        this.positionCursor();
+    }
+    typeBackspace() {
+        this.currCharIndex--;
         this.positionCursor();
     }
     typedWrong() {
@@ -75,6 +82,9 @@ class TextController {
     }
     getCurrChar() {
         return this.text[this.currCharIndex];
+    }
+    getPrevChar() {
+        return this.text[this.currCharIndex - 1];
     }
     getCurrCharElm() {
         return this.chars[this.currCharIndex];

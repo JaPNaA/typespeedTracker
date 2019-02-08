@@ -37,7 +37,7 @@ class TypingScene extends Scene {
         return controller;
     }
     createInput() {
-        const input = new InputController();
+        const input = new InputController(this.text);
         input.onInput(this.onInput.bind(this));
         input.appendTo(this.elm);
         return input;
