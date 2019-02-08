@@ -1,27 +1,34 @@
+import TextCursor from "./textCursor.js";
 class TextController {
     constructor() {
         this.chars = [];
         this.text = "";
         this.currCharIndex = 0;
         this.elm = this.createElm();
+        this.textElm = this.createTextElm();
+        this.cursor = new TextCursor();
+        this.cursor.appendTo(this.elm);
+        this.elm.appendChild(this.textElm);
     }
     setText(text) {
         const lines = text.split("\n");
         this.clearElm();
         this.text = text;
         for (let line of lines) {
-            this.elm.appendChild(this.createLineElm(line));
+            this.textElm.appendChild(this.createLineElm(line));
         }
     }
     typeChar(char) {
-        console.log(this.getCurrChar());
+        this.currCharIndex++;
+        this.cursor.positionTo(this.getCurrCharElm());
+        console.log(this.cursor);
     }
     appendTo(elm) {
         elm.appendChild(this.elm);
     }
     clearElm() {
-        while (this.elm.firstChild) {
-            this.elm.removeChild(this.elm.firstChild);
+        while (this.textElm.firstChild) {
+            this.textElm.removeChild(this.textElm.firstChild);
         }
     }
     createLineElm(line) {
@@ -41,6 +48,11 @@ class TextController {
         return letter;
     }
     createElm() {
+        const elm = document.createElement("div");
+        elm.classList.add("textToTypeContainer");
+        return elm;
+    }
+    createTextElm() {
         const elm = document.createElement("div");
         elm.classList.add("textToType");
         elm.innerText = "Loading...";

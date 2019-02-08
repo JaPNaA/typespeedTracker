@@ -1,11 +1,12 @@
 import Scene from "../../scene.js";
 import TextController from "./textController.js";
+import InputController from "./inputController.js";
 
 class TypingScene extends Scene {
     protected elm: HTMLDivElement;
 
     private text: TextController;
-    private input: HTMLInputElement;
+    private input: InputController;
 
     constructor() {
         super();
@@ -39,16 +40,15 @@ class TypingScene extends Scene {
         return controller;
     }
 
-    private createInput(): HTMLInputElement {
-        const input = document.createElement("input");
-        input.classList.add("input");
-        input.addEventListener("input", this.onInput.bind(this));
-        this.elm.appendChild(input);
+    private createInput(): InputController {
+        const input = new InputController();
+        input.onInput(this.onInput.bind(this));
+        input.appendTo(this.elm);
         return input;
     }
 
-    private onInput(e: Event) {
-        this.text.typeChar(this.input.value);
+    private onInput() {
+        this.text.typeChar(this.input.nextValue());
     }
 
     private async getText() {

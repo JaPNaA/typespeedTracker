@@ -1,12 +1,22 @@
+import TextCursor from "./textCursor.js";
+
 class TextController {
     private elm: HTMLDivElement;
+    private textElm: HTMLDivElement;
 
     private chars: HTMLSpanElement[] = [];
     private text: string = "";
     private currCharIndex: number = 0;
 
+    private cursor: TextCursor;
+
     constructor() {
         this.elm = this.createElm();
+        this.textElm = this.createTextElm();
+        this.cursor = new TextCursor();
+
+        this.cursor.appendTo(this.elm);
+        this.elm.appendChild(this.textElm);
     }
 
     public setText(text: string): void {
@@ -14,12 +24,14 @@ class TextController {
         this.clearElm();
         this.text = text;
         for (let line of lines) {
-            this.elm.appendChild(this.createLineElm(line));
+            this.textElm.appendChild(this.createLineElm(line));
         }
     }
 
     public typeChar(char: string): void {
-        console.log(this.getCurrChar());
+        this.currCharIndex++;
+        this.cursor.positionTo(this.getCurrCharElm());
+        console.log(this.cursor);
     }
 
     public appendTo(elm: HTMLElement): void {
@@ -27,8 +39,8 @@ class TextController {
     }
 
     private clearElm(): void {
-        while (this.elm.firstChild) {
-            this.elm.removeChild(this.elm.firstChild);
+        while (this.textElm.firstChild) {
+            this.textElm.removeChild(this.textElm.firstChild);
         }
     }
 
@@ -54,6 +66,12 @@ class TextController {
     }
 
     private createElm(): HTMLDivElement {
+        const elm = document.createElement("div");
+        elm.classList.add("textToTypeContainer");
+        return elm;
+    }
+
+    private createTextElm(): HTMLDivElement {
         const elm = document.createElement("div");
         elm.classList.add("textToType");
         elm.innerText = "Loading...";

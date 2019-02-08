@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import Scene from "../../scene.js";
 import TextController from "./textController.js";
+import InputController from "./inputController.js";
 class TypingScene extends Scene {
     constructor() {
         super();
@@ -35,14 +36,13 @@ class TypingScene extends Scene {
         return controller;
     }
     createInput() {
-        const input = document.createElement("input");
-        input.classList.add("input");
-        input.addEventListener("input", this.onInput.bind(this));
-        this.elm.appendChild(input);
+        const input = new InputController();
+        input.onInput(this.onInput.bind(this));
+        input.appendTo(this.elm);
         return input;
     }
-    onInput(e) {
-        this.text.typeChar(this.input.value);
+    onInput() {
+        this.text.typeChar(this.input.nextValue());
     }
     getText() {
         return __awaiter(this, void 0, void 0, function* () {
